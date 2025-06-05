@@ -228,11 +228,19 @@ else()
             CPMAddPackage(
                 NAME tbb
                 GITHUB_REPOSITORY oneapi-src/oneTBB
-                GIT_TAG v2021.12.0-rc2
+                GIT_TAG v2020.3.3  # < v2021, for older gcc
                 OPTIONS "TBB_TEST OFF"
-            )
+            )  # no CMakeLists.txt
             add_library(TracyTbb INTERFACE)
+            # cd _deps/tbb-src && make 
+            # export LD_LIBRARY_PATH=/path/to/tbb/lib:$LD_LIBRARY_PATH
+            # export CPLUS_INCLUDE_PATH=/home/bwang/gsim_wks/tracy/capture/build/_deps/tbb-src/include  # pstl need
+            set(tbb_SOURCE_DIR "/home/bwang/gsim_wks/tracy/capture/build/_deps/tbb-src")
+            message(STATUS "tbb_SOURCE_DIR = ${tbb_SOURCE_DIR}")
+            target_include_directories(TracyTbb INTERFACE ${tbb_SOURCE_DIR}/include)
+            target_link_libraries(TracyTbb INTERFACE ${tbb_SOURCE_DIR}/build/linux_intel64_gcc_cc11.4.0_libc2.35_kernel5.15.0_release/libtbb.so)
             target_link_libraries(TracyTbb INTERFACE tbb)
         endif()
     endif()
 endif()
+

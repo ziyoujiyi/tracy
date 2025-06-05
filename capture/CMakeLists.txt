@@ -24,4 +24,9 @@ set(PROGRAM_FILES
 
 add_executable(${PROJECT_NAME} ${PROGRAM_FILES} ${COMMON_FILES} ${SERVER_FILES})
 target_link_libraries(${PROJECT_NAME} PRIVATE TracyServer TracyGetOpt)
+
+# posix threads lib
+find_package(Threads REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
+
 set_property(DIRECTORY ${CMAKE_CURRENT_LIST_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})

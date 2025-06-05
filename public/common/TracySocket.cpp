@@ -468,7 +468,10 @@ static int addrinfo_and_socket_for_family( uint16_t port, int ai_family, struct 
     sprintf( portbuf, "%" PRIu16, port );
     if( getaddrinfo( nullptr, portbuf, &hints, res ) != 0 ) return -1;
     int sock = socket( (*res)->ai_family, (*res)->ai_socktype, (*res)->ai_protocol );
-    if (sock == -1) freeaddrinfo( *res );
+    if (sock == -1) {
+        perror("socket");
+        freeaddrinfo( *res );
+    }
     return sock;
 }
 

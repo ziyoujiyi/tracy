@@ -2,6 +2,7 @@
 
 #include <thread>
 #include <unistd.h>
+#include <iostream>
 
 #include "Tracy.hpp"
 #include "TracyC.h"
@@ -15,14 +16,14 @@ int main()
         TracyFiberEnter( fiber );
         TracyCZone( ctx, 1 );
         zone = ctx;
-        sleep( 1 );
+        sleep( 120 );
         TracyFiberLeave;
     });
     t1.join();
 
     std::thread t2( [] {
         TracyFiberEnter( fiber );
-        sleep( 1 );
+        sleep( 120 );
         TracyCZoneEnd( zone );
         TracyFiberLeave;
     });
