@@ -15,7 +15,7 @@ bool ApplyPathSubstitutions( std::string& path, const PathSubstitutionList& path
 {
     for( const auto& substitution : pathSubstitutionlist )
     {
-        if( std::regex_match(path, substitution.first) )
+        if( std::regex_match( path, substitution.first ) )
         {
             path = std::regex_replace( path, substitution.first, substitution.second );
             return true;
@@ -62,12 +62,12 @@ bool PatchSymbolsWithRegex( tracy::Worker& worker, const PathSubstitutionList& p
             tracy::CallstackFrame& frame = frameData.data[f];
 
             // TODO: use a better way to identify symbols that are unresolved
-            const char* nameStr = worker.GetString(frame.name);
+            const char* nameStr = worker.GetString( frame.name );
             if( strncmp( nameStr, relativeSoNameMatch.c_str(), relativeSoNameMatch.length() ) == 0 )
             {
                 // when doing offline resolving we pass the offset from the start of the shared library in the "symAddr"
                 const uint64_t decodedOffset = frame.symAddr;
-                entries.push_back( {&frame, decodedOffset} );
+                entries.push_back( { &frame, decodedOffset } );
             }
         }
     }
@@ -76,8 +76,8 @@ bool PatchSymbolsWithRegex( tracy::Worker& worker, const PathSubstitutionList& p
 
     // FIXME: the resolving of symbols here can be slow and could be done in parallel per "image"
     // - be careful with string allocation though as that would be not safe to do in parallel
-    for( FrameEntriesPerImageIdx::iterator imageIt = entriesPerImageIdx.begin(),
-         imageItEnd = entriesPerImageIdx.end(); imageIt != imageItEnd; ++imageIt )
+    for( FrameEntriesPerImageIdx::iterator imageIt = entriesPerImageIdx.begin(), imageItEnd = entriesPerImageIdx.end();
+         imageIt != imageItEnd; ++imageIt )
     {
         tracy::StringIdx imageIdx( imageIt->first );
         std::string imagePath = worker.GetString( imageIdx );
@@ -86,8 +86,7 @@ bool PatchSymbolsWithRegex( tracy::Worker& worker, const PathSubstitutionList& p
 
         if( !entries.size() ) continue;
 
-        std::cout << "Resolving " << entries.size() << " symbols for image: '" 
-                  << imagePath << "'" << std::endl;
+        std::cout << "Resolving " << entries.size() << " symbols for image: '" << imagePath << "'" << std::endl;
         const bool substituted = ApplyPathSubstitutions( imagePath, pathSubstitutionlist );
         if( substituted )
         {
@@ -95,17 +94,16 @@ bool PatchSymbolsWithRegex( tracy::Worker& worker, const PathSubstitutionList& p
         }
 
         SymbolEntryList resolvedEntries;
-        ResolveSymbols( imagePath, entries, resolvedEntries );
+        ResolveSymbols( imagePath, entries, resolvedEntries ); // OfflineSymbolResolverAddr2Line.cpp
 
         if( resolvedEntries.size() != entries.size() )
         {
-            std::cerr << " failed to resolve all entries! (got: " 
-                      << resolvedEntries.size() << ")" << std::endl;
+            std::cerr << " failed to resolve all entries! (got: " << resolvedEntries.size() << ")" << std::endl;
             continue;
         }
 
         // finally patch the string with the resolved symbol data
-        for ( size_t i = 0; i < resolvedEntries.size(); ++i )
+        for( size_t i = 0; i < resolvedEntries.size(); ++i )
         {
             FrameEntry& frameEntry = entries[i];
             const SymbolEntry& symbolEntry = resolvedEntries[i];
@@ -117,8 +115,8 @@ bool PatchSymbolsWithRegex( tracy::Worker& worker, const PathSubstitutionList& p
             if( verbose )
             {
                 const char* nameStr = worker.GetString( frame.name );
-                std::cout << "patching '" << nameStr << "' of '" << imagePath 
-                          << "' -> '" << symbolEntry.name << "'" << std::endl;
+                std::cout << "patching '" << nameStr << "' of '" << imagePath << "' -> '" << symbolEntry.name << "'"
+                          << std::endl;
             }
 
             frame.name = AddSymbolString( worker, symbolEntry.name );
@@ -140,10 +138,10 @@ void PatchSymbols( tracy::Worker& worker, const std::vector<std::string>& pathSu
     std::cout << "Resolving and patching symbols..." << std::endl;
 
     PathSubstitutionList pathSubstitutionList;
-    for ( const std::string& pathSubst : pathSubstitutionsStrings )
+    for( const std::string& pathSubst : pathSubstitutionsStrings )
     {
-        std::size_t pos = pathSubst.find(';');
-        if ( pos == std::string::npos )
+        std::size_t pos = pathSubst.find( ';' );
+        if( pos == std::string::npos )
         {
             std::cerr << "Ignoring invalid path substitution: '" << pathSubst
                       << " '(please separate the regex of the string to replace with a ';')" << std::endl;
@@ -152,19 +150,18 @@ void PatchSymbols( tracy::Worker& worker, const std::vector<std::string>& pathSu
 
         try
         {
-            std::regex reg(pathSubst.substr(0, pos));
-            std::string replacementStr(pathSubst.substr(pos + 1));
-            pathSubstitutionList.push_back(std::pair(reg, replacementStr));
+            std::regex reg( pathSubst.substr( 0, pos ) );
+            std::string replacementStr( pathSubst.substr( pos + 1 ) );
+            pathSubstitutionList.push_back( std::pair( reg, replacementStr ) );
         }
-        catch ( std::exception& e )
+        catch( std::exception& e )
         {
-            std::cerr << "Ignoring invalid path substitution: '" << pathSubst
-                      << "' (" << e.what() << ")" << std::endl;
+            std::cerr << "Ignoring invalid path substitution: '" << pathSubst << "' (" << e.what() << ")" << std::endl;
             continue;
         }
     }
 
-    if ( !PatchSymbolsWithRegex(worker, pathSubstitutionList, verbose) )
+    if( !PatchSymbolsWithRegex( worker, pathSubstitutionList, verbose ) )
     {
         std::cerr << "Failed to patch symbols" << std::endl;
     }

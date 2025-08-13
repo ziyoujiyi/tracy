@@ -1,15 +1,17 @@
 #ifndef __SYMBOLRESOLVER_HPP__
 #define __SYMBOLRESOLVER_HPP__
 
+#include <cstdint>
+#include <regex>
 #include <string>
 #include <vector>
-#include <regex>
-#include <cstdint>
+
+#include "../../public/client/TracyDebug.hpp"
 
 namespace tracy
 {
-    struct CallstackFrame;
-    class Worker;
+struct CallstackFrame;
+class Worker;
 }
 
 struct FrameEntry
@@ -32,9 +34,11 @@ using SymbolEntryList = std::vector<SymbolEntry>;
 bool ResolveSymbols( const std::string& imagePath, const FrameEntryList& inputEntryList,
                      SymbolEntryList& resolvedEntries );
 
-void PatchSymbols( tracy::Worker& worker, const std::vector<std::string>& pathSubstitutionsStrings, bool verbose = false );
+void PatchSymbols( tracy::Worker& worker, const std::vector<std::string>& pathSubstitutionsStrings,
+                   bool verbose = false );
 
-using PathSubstitutionList = std::vector<std::pair<std::regex, std::string> >;
-bool PatchSymbolsWithRegex( tracy::Worker& worker, const PathSubstitutionList& pathSubstituionlist, bool verbose = false );
+using PathSubstitutionList = std::vector<std::pair<std::regex, std::string>>;
+bool PatchSymbolsWithRegex( tracy::Worker& worker, const PathSubstitutionList& pathSubstituionlist,
+                            bool verbose = false );
 
 #endif // __SYMBOLRESOLVER_HPP__

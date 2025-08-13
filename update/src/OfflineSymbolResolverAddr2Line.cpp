@@ -1,25 +1,25 @@
 #ifndef _WIN32
 
-#include "OfflineSymbolResolver.h"
+#    include "OfflineSymbolResolver.h"
 
-#include <fstream>
-#include <iostream>
-#include <string>
-#include <array>
-#include <sstream>
-#include <memory>
-#include <stdio.h>
+#    include <array>
+#    include <fstream>
+#    include <iostream>
+#    include <memory>
+#    include <sstream>
+#    include <stdio.h>
+#    include <string>
 
 std::string ExecShellCommand( const char* cmd )
 {
     std::array<char, 128> buffer;
     std::string result;
-    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    std::unique_ptr<FILE, decltype( &pclose )> pipe( popen( cmd, "r" ), pclose );
     if( !pipe )
     {
         return "";
     }
-    while( fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr )
+    while( fgets( buffer.data(), buffer.size(), pipe.get() ) != nullptr )
     {
         result += buffer.data();
     }
@@ -28,11 +28,11 @@ std::string ExecShellCommand( const char* cmd )
 
 class SymbolResolver
 {
-public:
+  public:
     SymbolResolver()
     {
-        std::stringstream result( ExecShellCommand("which addr2line") );
-        std::getline(result, m_addr2LinePath);
+        std::stringstream result( ExecShellCommand( "which addr2line" ) );
+        std::getline( result, m_addr2LinePath );
 
         if( !m_addr2LinePath.length() )
         {
@@ -47,19 +47,20 @@ public:
     bool ResolveSymbols( const std::string& imagePath, const FrameEntryList& inputEntryList,
                          SymbolEntryList& resolvedEntries )
     {
-        if (!m_addr2LinePath.length()) return false;
+        if( !m_addr2LinePath.length() ) return false;
 
         // generate a single addr2line cmd line for all addresses in one invocation
         std::stringstream ss;
         ss << m_addr2LinePath << " -C -f -e " << imagePath << " -a ";
-        for ( const FrameEntry& entry : inputEntryList )
+        for( const FrameEntry& entry : inputEntryList )
         {
             ss << " 0x" << std::hex << entry.symbolOffset;
         }
 
+        MyDebug( "cmd: %s", ss.str().c_str() );
         std::string resultStr = ExecShellCommand( ss.str().c_str() );
-        std::stringstream result(resultStr);
-        //printf("executing: '%s' got '%s'\n", ss.str().c_str(), result.str().c_str());
+        std::stringstream result( resultStr );
+        // printf("executing: '%s' got '%s'\n", ss.str().c_str(), result.str().c_str());
 
         // The output is 2 lines per entry with the following contents:
         // hex_address_of_symbol
@@ -75,17 +76,17 @@ public:
             std::string addr;
             std::getline( result, addr );
             std::getline( result, newEntry.name );
-            if (newEntry.name == "??")
+            if( newEntry.name == "??" )
             {
-                newEntry.name = "[unknown] + " + std::to_string(inputEntry.symbolOffset);
+                newEntry.name = "[unknown] + " + std::to_string( inputEntry.symbolOffset );
             }
 
             std::string fileLine;
-            std::getline(result, fileLine);
-            if ( fileLine != "??:?" )
+            std::getline( result, fileLine );
+            if( fileLine != "??:?" )
             {
-                size_t pos = fileLine.find_last_of(':');
-                if ( pos != std::string::npos )
+                size_t pos = fileLine.find_last_of( ':' );
+                if( pos != std::string::npos )
                 {
                     newEntry.file = fileLine.substr( 0, pos );
                     std::string lineStr = fileLine.substr( pos + 1 );
@@ -94,13 +95,13 @@ public:
                 }
             }
 
-            resolvedEntries.push_back( std::move(newEntry) );
+            resolvedEntries.push_back( std::move( newEntry ) );
         }
 
         return true;
     }
 
-private:
+  private:
     std::string m_addr2LinePath;
 };
 

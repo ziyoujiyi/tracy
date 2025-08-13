@@ -3,6 +3,7 @@
 
 #include <assert.h>
 #include <stddef.h>
+#include <typeinfo>
 
 #include "../common/TracyAlloc.hpp"
 #include "../common/TracyForceInline.hpp"
@@ -10,10 +11,10 @@
 namespace tracy
 {
 
-template<typename T>
+template <typename T>
 class FastVector
 {
-public:
+  public:
     using iterator = T*;
     using const_iterator = const T*;
 
@@ -28,10 +29,7 @@ public:
     FastVector( const FastVector& ) = delete;
     FastVector( FastVector&& ) = delete;
 
-    ~FastVector()
-    {
-        tracy_free( m_ptr );
-    }
+    ~FastVector() { tracy_free( m_ptr ); }
 
     FastVector& operator=( const FastVector& ) = delete;
     FastVector& operator=( FastVector&& ) = delete;
@@ -47,11 +45,27 @@ public:
     T* end() { return m_write; }
     const T* end() const { return m_write; }
 
-    T& front() { assert( !empty() ); return m_ptr[0]; }
-    const T& front() const { assert( !empty() ); return m_ptr[0]; }
+    T& front()
+    {
+        assert( !empty() );
+        return m_ptr[0];
+    }
+    const T& front() const
+    {
+        assert( !empty() );
+        return m_ptr[0];
+    }
 
-    T& back() { assert( !empty() ); return m_write[-1]; }
-    const T& back() const { assert( !empty() ); return m_write[-1]; }
+    T& back()
+    {
+        assert( !empty() );
+        return m_write[-1];
+    }
+    const T& back() const
+    {
+        assert( !empty() );
+        return m_write[-1];
+    }
 
     T& operator[]( size_t idx ) { return m_ptr[idx]; }
     const T& operator[]( size_t idx ) const { return m_ptr[idx]; }
@@ -64,19 +78,14 @@ public:
 
     T* prepare_next()
     {
+        // MyDebug( "m_serialQueue +1, %s", typeid( T ).name() );
         if( m_write == m_end ) AllocMore();
         return m_write;
     }
 
-    void commit_next()
-    {
-        m_write++;
-    }
+    void commit_next() { m_write++; }
 
-    void clear()
-    {
-        m_write = m_ptr;
-    }
+    void clear() { m_write = m_ptr; }
 
     void swap( FastVector& vec )
     {
@@ -95,7 +104,7 @@ public:
         vec.m_end = end1;
     }
 
-private:
+  private:
     tracy_no_inline void AllocMore()
     {
         const auto cap = size_t( m_end - m_ptr ) * 2;

@@ -32,7 +32,6 @@ else()
 endif()
 
 # GLFW
-
 if(NOT USE_WAYLAND AND NOT EMSCRIPTEN)
     pkg_check_modules(GLFW glfw3)
     if (GLFW_FOUND AND NOT DOWNLOAD_GLFW)
@@ -207,6 +206,7 @@ if (NOT NO_FILESELECTOR AND NOT EMSCRIPTEN)
     endif()
 endif()
 
+message(STATUS "NO_PARALLEL_STL = ${NO_PARALLEL_STL}")
 # TBB
 if (NO_PARALLEL_STL)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNO_PARALLEL_SORT")
@@ -219,6 +219,7 @@ else()
         #
         # Some distributions have pgk-config files for TBB, others don't.
 
+        message(STATUS "TBB_FOUND = ${TBB_FOUND}")
         pkg_check_modules(TBB tbb)
         if (TBB_FOUND)
             add_library(TracyTbb INTERFACE)
@@ -230,15 +231,11 @@ else()
                 GITHUB_REPOSITORY oneapi-src/oneTBB
                 GIT_TAG v2020.3.3  # < v2021, for older gcc
                 OPTIONS "TBB_TEST OFF"
-            )  # no CMakeLists.txt
+            ) 
             add_library(TracyTbb INTERFACE)
-            # cd _deps/tbb-src && make 
-            # export LD_LIBRARY_PATH=/path/to/tbb/lib:$LD_LIBRARY_PATH
-            # export CPLUS_INCLUDE_PATH=/home/bwang/gsim_wks/tracy/capture/build/_deps/tbb-src/include  # pstl need
             set(tbb_SOURCE_DIR "/home/bwang/gsim_wks/tracy/capture/build/_deps/tbb-src")
-            message(STATUS "tbb_SOURCE_DIR = ${tbb_SOURCE_DIR}")
-            target_include_directories(TracyTbb INTERFACE ${tbb_SOURCE_DIR}/include)
-            target_link_libraries(TracyTbb INTERFACE ${tbb_SOURCE_DIR}/build/linux_intel64_gcc_cc11.4.0_libc2.35_kernel5.15.0_release/libtbb.so)
+            include_directories(TracyTbb INTERFACE ${tbb_SOURCE_DIR}/include)
+            link_directories(TracyTbb INTERFACE ${tbb_SOURCE_DIR}/build/linux_intel64_gcc_cc11.4.0_libc2.35_kernel5.15.0_release)
             target_link_libraries(TracyTbb INTERFACE tbb)
         endif()
     endif()

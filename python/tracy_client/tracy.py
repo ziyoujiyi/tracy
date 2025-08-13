@@ -17,8 +17,11 @@ from tracy_client.TracyClientBindings import (
     free,
     message,
     plot,
+    with_full_callstack,
+    f,
     _plot_config,
 )
+
 from tracy_client.scoped import (
     Color,
     ScopedZone,

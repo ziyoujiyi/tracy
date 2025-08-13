@@ -7,6 +7,7 @@ project(Tracy LANGUAGES CXX VERSION ${TRACY_VERSION_STRING})
 
 file(GENERATE OUTPUT .gitignore CONTENT "*")
 
+message(STATUS "BUILD_SHARED_LIBS = ${BUILD_SHARED_LIBS}")
 if(${BUILD_SHARED_LIBS})
 	set(DEFAULT_STATIC OFF)
 else()
@@ -17,6 +18,14 @@ option(TRACY_STATIC "Whether to build Tracy as a static library" ${DEFAULT_STATI
 
 find_package(Threads REQUIRED)
 
+# === Python3 find ===
+# set(Python3_EXECUTABLE "/home/bwang/.gsim_user_env/e1c5c2b/v0.4.0/bin/python")
+set(Python3_EXECUTABLE "/home/bwang/envs/envs/py38/bin/python")
+find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+message(STATUS "Python3_EXECUTABLE: ${Python3_EXECUTABLE}")
+message(STATUS "Python3_INCLUDE_DIRS: ${Python3_INCLUDE_DIRS}")
+message(STATUS "Python3_LIBRARIES: ${Python3_LIBRARIES}")
+ 
 set(TRACY_PUBLIC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/public)
 
 if(TRACY_STATIC)
@@ -29,7 +38,9 @@ add_library(TracyClient ${TRACY_VISIBILITY} "${TRACY_PUBLIC_DIR}/TracyClient.cpp
 target_compile_features(TracyClient PUBLIC cxx_std_11)
 target_include_directories(TracyClient SYSTEM PUBLIC
     $<BUILD_INTERFACE:${TRACY_PUBLIC_DIR}>
-    $<INSTALL_INTERFACE:include>)
+    $<INSTALL_INTERFACE:include>
+    ${Python3_INCLUDE_DIRS}
+)
 target_link_libraries(
     TracyClient
     PUBLIC
@@ -138,6 +149,7 @@ set(client_includes
     ${TRACY_PUBLIC_DIR}/client/TracySysPower.hpp
     ${TRACY_PUBLIC_DIR}/client/TracySysTime.hpp
     ${TRACY_PUBLIC_DIR}/client/TracySysTrace.hpp
+    ${TRACY_PUBLIC_DIR}/client/TracyPyTrace.hpp
     ${TRACY_PUBLIC_DIR}/client/TracyThread.hpp)
 
 set(common_includes
