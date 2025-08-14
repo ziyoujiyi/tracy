@@ -233,7 +233,7 @@ else()
                 OPTIONS "TBB_TEST OFF"
             ) 
             add_library(TracyTbb INTERFACE)
-            set(tbb_SOURCE_DIR "/home/bwang/gsim_wks/tracy/capture/build/_deps/tbb-src")
+            set(tbb_SOURCE_DIR "/home/bwang/gsim_wks/app/3rdparty/tracy/capture/build/_deps/tbb-src")
             include_directories(TracyTbb INTERFACE ${tbb_SOURCE_DIR}/include)
             link_directories(TracyTbb INTERFACE ${tbb_SOURCE_DIR}/build/linux_intel64_gcc_cc11.4.0_libc2.35_kernel5.15.0_release)
             target_link_libraries(TracyTbb INTERFACE tbb)

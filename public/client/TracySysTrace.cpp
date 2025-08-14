@@ -1167,7 +1167,7 @@ void SysTraceWorker( void* ptr )
 #        ifdef TRACY_ON_DEMAND
         if( !GetProfiler().IsConnected() )
         {
-            MyDebug( "server not connected" );
+            // MyDebug( "server not connected" );
             if( !traceActive.load( std::memory_order_relaxed ) ) break;
             for( int i = 0; i < numBuffers; i++ )
             {

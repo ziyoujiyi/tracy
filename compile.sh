@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-TRACY_ROOT=/home/bwang/gsim_wks/tracy
+TRACY_ROOT=.
 
 cd "$TRACY_ROOT/build"
 make clean
@@ -12,4 +12,4 @@ cd "$TRACY_ROOT/python"
 /home/bwang/envs/envs/py38/bin/python setup.py bdist_wheel
 
 /home/bwang/envs/envs/py38/bin/pip uninstall -y tracy_client || true
-/home/bwang/envs/envs/py38/bin/pip install "$TRACY_ROOT/python/dist/"*.whl
+/home/bwang/envs/envs/py38/bin/pip install "$TRACY_ROOT/dist/"*.whl

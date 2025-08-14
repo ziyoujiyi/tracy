@@ -1,13 +1,34 @@
-/*
-g++ -g fibers.cpp ../public/TracyClient.cpp -I ../public/tracy -I
-/mnt/l/f/share/cnliao/software/conda/envs/prod/include/python3.7m
-/mnt/l/f/share/cnliao/software/conda/envs/prod/lib/libpython3.7m.so -DTRACY_ENABLE -DTRACY_FIBERS
--DTRACY_VERBOSE -lpthread -ldl
+// g++ fibers.cpp ../public/TracyClient.cpp -I../public/tracy -DTRACY_ENABLE -DTRACY_FIBERS -lpthread -ldl
 
-export LD_LIBRARY_PATH=/mnt/l/f/share/cnliao/software/conda/envs/prod/lib:$LD_LIBRARY_PATH
-*/
-// ./a.out
+#include <thread>
+#include <unistd.h>
 
-#include "fibers.hpp"
+#include "Tracy.hpp"
+#include "TracyC.h"
 
-int main() { f(); }
+const char* fiber = "job1";
+TracyCZoneCtx zone;
+
+int main()
+{
+    std::thread t1(
+        []
+        {
+            TracyFiberEnter( fiber );
+            TracyCZone( ctx, 1 );
+            zone = ctx;
+            sleep( 1 );
+            TracyFiberLeave;
+        } );
+    t1.join();
+
+    std::thread t2(
+        []
+        {
+            TracyFiberEnter( fiber );
+            sleep( 1 );
+            TracyCZoneEnd( zone );
+            TracyFiberLeave;
+        } );
+    t2.join();
+}
