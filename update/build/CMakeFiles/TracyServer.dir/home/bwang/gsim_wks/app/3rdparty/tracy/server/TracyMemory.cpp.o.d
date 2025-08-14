@@ -1,0 +1,22 @@
+CMakeFiles/TracyServer.dir/home/bwang/gsim_wks/app/3rdparty/tracy/server/TracyMemory.cpp.o: \
+ /home/bwang/gsim_wks/app/3rdparty/tracy/server/TracyMemory.cpp \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/sysroot/usr/include/stdc-predef.h \
+ /home/bwang/gsim_wks/app/3rdparty/tracy/server/TracyMemory.hpp \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/include/c++/9.4.0/atomic \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/include/c++/9.4.0/bits/atomic_base.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/include/c++/9.4.0/x86_64-conda-linux-gnu/bits/c++config.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/include/c++/9.4.0/x86_64-conda-linux-gnu/bits/os_defines.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/sysroot/usr/include/features.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/sysroot/usr/include/sys/cdefs.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/sysroot/usr/include/bits/wordsize.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/sysroot/usr/include/gnu/stubs.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/sysroot/usr/include/gnu/stubs-64.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/include/c++/9.4.0/x86_64-conda-linux-gnu/bits/cpu_defines.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/include/c++/9.4.0/pstl/pstl_config.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/lib/gcc/x86_64-conda-linux-gnu/9.4.0/include/stdint.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/sysroot/usr/include/stdint.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/sysroot/usr/include/bits/wchar.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/include/c++/9.4.0/bits/atomic_lockfree_defines.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/include/c++/9.4.0/bits/move.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/include/c++/9.4.0/bits/concept_check.h \
+ /mnt/l/f/share/cnliao/software/conda/envs/prod/x86_64-conda-linux-gnu/include/c++/9.4.0/type_traits

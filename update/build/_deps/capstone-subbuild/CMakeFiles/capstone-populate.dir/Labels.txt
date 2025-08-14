@@ -1,0 +1,14 @@
+# Target labels
+ capstone-populate
+# Source files and their labels
+/home/bwang/gsim_wks/app/3rdparty/tracy/update/build/_deps/capstone-subbuild/CMakeFiles/capstone-populate
+/home/bwang/gsim_wks/app/3rdparty/tracy/update/build/_deps/capstone-subbuild/CMakeFiles/capstone-populate.rule
+/home/bwang/gsim_wks/app/3rdparty/tracy/update/build/_deps/capstone-subbuild/CMakeFiles/capstone-populate-complete.rule
+/home/bwang/gsim_wks/app/3rdparty/tracy/update/build/_deps/capstone-subbuild/capstone-populate-prefix/src/capstone-populate-stamp/capstone-populate-build.rule
+/home/bwang/gsim_wks/app/3rdparty/tracy/update/build/_deps/capstone-subbuild/capstone-populate-prefix/src/capstone-populate-stamp/capstone-populate-configure.rule
+/home/bwang/gsim_wks/app/3rdparty/tracy/update/build/_deps/capstone-subbuild/capstone-populate-prefix/src/capstone-populate-stamp/capstone-populate-download.rule
+/home/bwang/gsim_wks/app/3rdparty/tracy/update/build/_deps/capstone-subbuild/capstone-populate-prefix/src/capstone-populate-stamp/capstone-populate-install.rule
+/home/bwang/gsim_wks/app/3rdparty/tracy/update/build/_deps/capstone-subbuild/capstone-populate-prefix/src/capstone-populate-stamp/capstone-populate-mkdir.rule
+/home/bwang/gsim_wks/app/3rdparty/tracy/update/build/_deps/capstone-subbuild/capstone-populate-prefix/src/capstone-populate-stamp/capstone-populate-patch.rule
+/home/bwang/gsim_wks/app/3rdparty/tracy/update/build/_deps/capstone-subbuild/capstone-populate-prefix/src/capstone-populate-stamp/capstone-populate-test.rule
+/home/bwang/gsim_wks/app/3rdparty/tracy/update/build/_deps/capstone-subbuild/capstone-populate-prefix/src/capstone-populate-stamp/capstone-populate-update.rule

@@ -1,0 +1,2 @@
+/mnt/l/f/share/cnliao/software/conda/envs/prod/bin/x86_64-conda-linux-gnu-ar qc libTracyGetOpt.a CMakeFiles/TracyGetOpt.dir/home/bwang/gsim_wks/app/3rdparty/tracy/getopt/getopt.c.o
+/mnt/l/f/share/cnliao/software/conda/envs/prod/bin/x86_64-conda-linux-gnu-ranlib libTracyGetOpt.a

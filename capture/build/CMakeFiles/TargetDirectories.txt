@@ -1,0 +1,11 @@
+/home/bwang/gsim_wks/app/3rdparty/tracy/capture/build/CMakeFiles/rebuild_cache.dir
+/home/bwang/gsim_wks/app/3rdparty/tracy/capture/build/CMakeFiles/edit_cache.dir
+/home/bwang/gsim_wks/app/3rdparty/tracy/capture/build/CMakeFiles/tracy-capture.dir
+/home/bwang/gsim_wks/app/3rdparty/tracy/capture/build/CMakeFiles/TracyServer.dir
+/home/bwang/gsim_wks/app/3rdparty/tracy/capture/build/CMakeFiles/TracyNfd.dir
+/home/bwang/gsim_wks/app/3rdparty/tracy/capture/build/CMakeFiles/TracyGetOpt.dir
+/home/bwang/gsim_wks/app/3rdparty/tracy/capture/build/CMakeFiles/TracyZstd.dir
+/home/bwang/gsim_wks/app/3rdparty/tracy/capture/build/CMakeFiles/TracyImGui.dir
+/home/bwang/gsim_wks/app/3rdparty/tracy/capture/build/_deps/capstone-build/CMakeFiles/rebuild_cache.dir
+/home/bwang/gsim_wks/app/3rdparty/tracy/capture/build/_deps/capstone-build/CMakeFiles/edit_cache.dir
+/home/bwang/gsim_wks/app/3rdparty/tracy/capture/build/_deps/capstone-build/CMakeFiles/capstone.dir
